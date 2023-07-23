@@ -8,6 +8,7 @@ import PetItem from "../../components/NoteList/PetItem";
 import { GlobalStyles } from "../../styles/GlobalStyles";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { setAddNote } from "../../store/slices/notesSlice";
+import PetSelector from "../Buttons/PetSelector";
 
 const AddNoteBottomSheet = () => {
   const dispatch = useAppDispatch();
@@ -47,7 +48,7 @@ const AddNoteBottomSheet = () => {
 
         {/* buttons */}
         <View style={styles.buttonsRow}>
-          <PetItem name="Otto" color="brown" emoji="🐕" />
+          <PetSelector/>
           <RoundedButton title="Agregar Nota" onPress={toggleBottomSheet} />
         </View>
       </View>

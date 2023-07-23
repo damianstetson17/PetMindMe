@@ -3,23 +3,27 @@ import React, { useState, useEffect } from "react";
 import { GlobalStyles } from "../../styles/GlobalStyles";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { setNewPetData } from "../../store/slices/notesSlice";
+import { PetItemType } from "../../types";
 
-const EmojiSelector = () => {
+const PetSelector = () => {
   const dispatch = useAppDispatch();
-  let emojis = useAppSelector((state) => state.notes.emojis);
+  let pets = useAppSelector((state) => state.notes.pets);
+
   let newPetData = useAppSelector((state) => state.notes.newPetData);
   const [index, setIndex] = useState(0);
-  const [emoji, setEmoji] = useState("");
-  
+  const [pet, setPet] = useState<PetItemType>();
+
   //needed for have the last updated values
   useEffect(() => {
-    setEmoji(emojis[index]);
-    dispatch(setNewPetData({...newPetData, emoji}))
-  }, [index, emoji])
-  
+    setPet(pets[index]);
+    if (pet) {
+      dispatch(setNewPetData({ ...newPetData, id: pet.id }));
+    }
+  }, [index, pet]);
+
   const changeNextEmoji = () => {
     //reset index
-    if (index >= emojis.length - 1) {
+    if (index >= pets.length - 1) {
       setIndex(0);
     } else {
       setIndex(index + 1);
@@ -31,13 +35,13 @@ const EmojiSelector = () => {
       onPress={() => changeNextEmoji()}
       style={styles.container}
     >
-      <Text style={[styles.title]}>Emoji: </Text>
-      <Text style={GlobalStyles.text}>{emojis[index]}</Text>
+      <Text style={[styles.title, { marginRight: 5 }]}>{pets[index].name}</Text>
+      <Text style={GlobalStyles.text}>{pets[index].emoji}</Text>
     </TouchableOpacity>
   );
 };
 
-export default EmojiSelector;
+export default PetSelector;
 
 const styles = StyleSheet.create({
   container: {

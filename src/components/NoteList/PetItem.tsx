@@ -29,5 +29,6 @@ const styles = StyleSheet.create({
   },
   name: {
     ...GlobalStyles.text,
+    marginRight: 5,
   },
 });
