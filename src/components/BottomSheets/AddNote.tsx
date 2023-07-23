@@ -1,10 +1,9 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { BottomSheet } from "react-native-btr";
 import CloseButton from "../../components/Buttons/CloseButton";
 import { Colors } from "../../styles/Colors";
 import RoundedButton from "../../components/Buttons/RoundedButton";
-import PetItem from "../../components/NoteList/PetItem";
 import { GlobalStyles } from "../../styles/GlobalStyles";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { setAddNote } from "../../store/slices/notesSlice";
@@ -13,19 +12,26 @@ import PetSelector from "../Buttons/PetSelector";
 const AddNoteBottomSheet = () => {
   const dispatch = useAppDispatch();
   let visible = useAppSelector((state) => state.notes.showAddNote);
-
+  const [elevate, setElevate] = useState(false);
   //Toggling the visibility state of the bottom sheet
   const toggleBottomSheet = () => {
     dispatch(setAddNote(!visible));
+    setElevate(false);
   };
-
+  
   return (
     <BottomSheet
       visible={visible}
       onBackButtonPress={toggleBottomSheet}
       onBackdropPress={toggleBottomSheet}
     >
-      <View style={styles.bottomSheet}>
+      <View
+        style={
+          elevate
+            ? { ...styles.bottomSheet, height: "90%" }
+            : styles.bottomSheet
+        }
+      >
         <View style={{ alignSelf: "flex-end", margin: 15 }}>
           <CloseButton onPress={toggleBottomSheet} />
         </View>
@@ -34,21 +40,28 @@ const AddNoteBottomSheet = () => {
         </Text>
 
         {/* text input */}
-        <View style={styles.inputContainer}>
+        <View
+          style={
+            elevate
+              ? { ...styles.inputContainer, height: "35%" }
+              : styles.inputContainer
+          }
+        >
           <TextInput
-            multiline
             editable
+            multiline
             maxLength={300}
             keyboardType="default"
             placeholder="Escribe tu nota aquí  :)"
             placeholderTextColor={"gray"}
             style={styles.inputText}
+            onPressIn={() => setElevate(true)}
           />
         </View>
 
         {/* buttons */}
         <View style={styles.buttonsRow}>
-          <PetSelector/>
+          <PetSelector />
           <RoundedButton title="Agregar Nota" onPress={toggleBottomSheet} />
         </View>
       </View>

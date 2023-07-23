@@ -10,7 +10,7 @@ interface Props {
 const PetItem = ({ petData }: Props) => {
   return (
     <TouchableOpacity style={styles.container}>
-      <Text style={[styles.name, { color: petData.color }]}>
+      <Text style={[styles.name]}>
         {petData.name}
       </Text>
       <Text style={GlobalStyles.text}>{petData.emoji}</Text>
