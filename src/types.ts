@@ -12,6 +12,7 @@ export type PetItemType = {
  * Item type for NoteList component
  */
 export type ItemNoteType = {
+  id: number,
   description: string;
   date: string;
   petId: number;

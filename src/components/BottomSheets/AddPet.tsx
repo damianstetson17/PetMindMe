@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { BottomSheet } from "react-native-btr";
 import CloseButton from "../../components/Buttons/CloseButton";
 import { Colors } from "../../styles/Colors";
@@ -7,15 +7,25 @@ import RoundedButton from "../../components/Buttons/RoundedButton";
 import { GlobalStyles } from "../../styles/GlobalStyles";
 import EmojiSelector from "../Buttons/EmojiSelector";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { setAddPet } from "../../store/slices/notesSlice";
+import { addPet, setAddPet } from "../../store/slices/notesSlice";
 
 const AddPetBottomSheet = () => {
   const dispatch = useAppDispatch();
   let visible = useAppSelector((state) => state.notes.showAddPet);
+  let newPetData = useAppSelector((state) => state.notes.newPetData);
+  const [name, setName] = useState("");
 
   //Toggling the visibility state of the bottom sheet
   const toggleBottomSheet = () => {
     dispatch(setAddPet(!visible));
+  };
+
+  //ad new pet and dismiss
+  const handleAddNewPet = () => {
+    if (name.length > 0) {
+      dispatch(addPet({...newPetData, name}));
+      toggleBottomSheet();
+    }
   };
 
   return (
@@ -43,13 +53,17 @@ const AddPetBottomSheet = () => {
             placeholder="Nombre de tu mascota  :)"
             placeholderTextColor={"gray"}
             style={styles.inputText}
+            onChangeText={(text) => setName(text)}
           />
         </View>
 
         {/* buttons */}
         <View style={styles.buttonsRow}>
           <EmojiSelector />
-          <RoundedButton title="Agregar Mascota" onPress={toggleBottomSheet} />
+          <RoundedButton
+            title="Agregar Mascota"
+            onPress={() => handleAddNewPet()}
+          />
         </View>
       </View>
     </BottomSheet>

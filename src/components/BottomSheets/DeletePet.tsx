@@ -3,15 +3,15 @@ import React from "react";
 import { BottomSheet } from "react-native-btr";
 import CloseButton from "../../components/Buttons/CloseButton";
 import { Colors } from "../../styles/Colors";
-import PetItem from "../../components/NoteList/PetItem";
 import { GlobalStyles } from "../../styles/GlobalStyles";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { setDeletePet } from "../../store/slices/notesSlice";
+import PetList from "../PetList/PetList";
 
 const DeletePetBottomSheet = () => {
   const dispatch = useAppDispatch();
   let visible = useAppSelector((state) => state.notes.showDeletePet);
+  let pets = useAppSelector((state) => state.notes.pets);
 
   //Toggling the visibility state of the bottom sheet
   const toggleBottomSheet = () => {
@@ -32,21 +32,9 @@ const DeletePetBottomSheet = () => {
           Borrar Mascota
         </Text>
 
-        {/* buttons */}
-        <View style={styles.buttonsRow}>
-          <PetItem name="Otto" color="brown" emoji="🐕" />
-
-          {/* used has trash button */}
-          <CloseButton
-            icon={
-              <MaterialCommunityIcons
-                name="delete-empty-outline"
-                size={30}
-                color="black"
-              />
-            }
-            onPress={toggleBottomSheet}
-          />
+        {/* pet list with delete button */}
+        <View style={{width: '55%'}}>
+          <PetList data={pets} />
         </View>
       </View>
     </BottomSheet>

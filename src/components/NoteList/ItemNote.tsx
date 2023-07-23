@@ -10,12 +10,12 @@ const ItemNote = ({ description, date, petId }: ItemNoteType) => {
   let petData = useAppSelector((state) => state.notes.pets).find(
     (pet: PetItemType) => pet.id === petId
   );
-
+  const emptyPet : PetItemType= {id:-1,name:'   ?   ', color:"", emoji:'🤔'}
   return (
     <TouchableOpacity style={styles.container}>
       <Text style={[GlobalStyles.text, styles.description]}>{description}</Text>
       <View style={styles.bottom}>
-        {petData ? <PetItem petData={petData} /> : <Text></Text>}
+        {petData ? (<PetItem petData={petData} />) : (<PetItem petData={emptyPet} />)}
         <Text style={[GlobalStyles.text, styles.date]}>{date}</Text>
       </View>
     </TouchableOpacity>

@@ -16,6 +16,7 @@ const NoteList = ({ data }: Props) => {
           description={item.description}
           date={item.date}
           petId={item.petId}
+          id={item.id}
         />
       )}
     />
