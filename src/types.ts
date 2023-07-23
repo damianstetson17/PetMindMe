@@ -1,3 +1,6 @@
+/**
+ * Item type for pets data
+ */
 export type PetItemType = {
   name: string;
   color?: string;
@@ -13,3 +16,12 @@ export type ItemNoteType = {
   petId: number;
   petData?: PetItemType;
 };
+
+/**
+ * screens names enum
+ */
+export enum ScreensNames {
+  FOOD = "Food",
+  DRUGS = "Drugs",
+  VET = "Vet",
+}

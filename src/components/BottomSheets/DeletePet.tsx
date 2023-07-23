@@ -1,19 +1,21 @@
-import { StyleSheet, Text, View, TextInput } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
 import { BottomSheet } from "react-native-btr";
 import CloseButton from "../../components/Buttons/CloseButton";
 import { Colors } from "../../styles/Colors";
-import RoundedButton from "../../components/Buttons/RoundedButton";
 import PetItem from "../../components/NoteList/PetItem";
 import { GlobalStyles } from "../../styles/GlobalStyles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { setDeletePet } from "../../store/slices/notesSlice";
 
 const DeletePetBottomSheet = () => {
-  const [visible, setVisible] = useState(true);
+  const dispatch = useAppDispatch();
+  let visible = useAppSelector((state) => state.notes.showDeletePet);
 
   //Toggling the visibility state of the bottom sheet
   const toggleBottomSheet = () => {
-    setVisible(!visible);
+    dispatch(setDeletePet(!visible));
   };
 
   return (
@@ -33,7 +35,7 @@ const DeletePetBottomSheet = () => {
         {/* buttons */}
         <View style={styles.buttonsRow}>
           <PetItem name="Otto" color="brown" emoji="🐕" />
-          
+
           {/* used has trash button */}
           <CloseButton
             icon={
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 23,
     marginTop: -30,
-    marginBottom: 15
+    marginBottom: 15,
   },
   inputContainer: {
     alignSelf: "stretch",

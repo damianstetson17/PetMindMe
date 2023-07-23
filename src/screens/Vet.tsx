@@ -1,27 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet } from "react-native";
+import React from "react";
 import Layout from "./_Layout";
-import NoteList from '../components/NoteList/NoteList';
-import { formatDate } from '../utils/formatDate';
+import NoteList from "../components/NoteList/NoteList";
+import { useAppSelector } from "../store/store";
 
 const Vet = () => {
   const screenCategory = "Veterinari@";
-
-  const notes = [
-    {
-      description: "Ya se puso la antirabica!",
-      date: formatDate(new Date()),
-      petId: 1,
-    },
-  ];
+  let notes = useAppSelector((state) => state.notes.vetNotes);
 
   return (
     <Layout title={screenCategory}>
       <NoteList data={notes} />
     </Layout>
   );
-}
+};
 
-export default Vet
+export default Vet;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

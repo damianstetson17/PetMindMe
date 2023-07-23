@@ -4,7 +4,7 @@ import { ItemNoteType } from "../../types";
 import ItemNote from "./ItemNote";
 
 type Props = {
-  data: ItemNoteType[] | any[];
+  data?: ItemNoteType[];
 };
 
 const NoteList = ({ data }: Props) => {

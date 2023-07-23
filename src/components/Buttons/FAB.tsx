@@ -5,11 +5,19 @@ import { FloatingAction } from "react-native-floating-action";
 import { EvilIcons } from "@expo/vector-icons";
 import { Colors } from "../../styles/Colors";
 import { GlobalStyles } from "../../styles/GlobalStyles";
+import { useAppDispatch } from "../../store/store";
+import {
+  setAddNote,
+  setAddPet,
+  setDeletePet,
+} from "../../store/slices/notesSlice";
 
 /**
  * Floating action button
  */
 const FAB = () => {
+  const dispatch = useAppDispatch();
+
   //menu actions
   const actions = [
     {
@@ -50,13 +58,13 @@ const FAB = () => {
       onPressItem={(name) => {
         switch (name) {
           case "add_note":
-            console.log("add_note");
+            dispatch(setAddNote(true));
             break;
           case "add_pet":
-            console.log("add_pet");
+            dispatch(setAddPet(true));
             break;
           case "delete_pet":
-            console.log("delete_pet");
+            dispatch(setDeletePet(true));
             break;
         }
       }}

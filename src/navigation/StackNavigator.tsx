@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Food from "../screens/Food";
 import Drugs from "../screens/Drugs";
 import Vet from "../screens/Vet";
+import { ScreensNames } from "../types";
 
 const Stack = createNativeStackNavigator();
 export const StackNavigator = () => {
@@ -13,9 +14,9 @@ export const StackNavigator = () => {
         screenOptions={{ animation: "fade" }}
       >
         <Stack.Group screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Food" component={Food} />
-          <Stack.Screen name="Drugs" component={Drugs} />
-          <Stack.Screen name="Vet" component={Vet} />
+          <Stack.Screen name={ScreensNames.FOOD} component={Food} />
+          <Stack.Screen name={ScreensNames.DRUGS}  component={Drugs} />
+          <Stack.Screen name={ScreensNames.VET}  component={Vet} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

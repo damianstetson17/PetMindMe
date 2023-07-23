@@ -27,8 +27,8 @@ const Layout = ({ title, children }: Props) => {
       <FAB />
 
       {/* bottom sheets */}
-      {/* <AddNoteBottomSheet /> */}
-      {/* <AddPetBottomSheet /> */}
+      <AddNoteBottomSheet />
+      <AddPetBottomSheet />
       <DeletePetBottomSheet />
     </SafeAreaView>
   );

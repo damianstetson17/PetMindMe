@@ -1,19 +1,21 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { BottomSheet } from "react-native-btr";
 import CloseButton from "../../components/Buttons/CloseButton";
 import { Colors } from "../../styles/Colors";
 import RoundedButton from "../../components/Buttons/RoundedButton";
-import PetItem from "../../components/NoteList/PetItem";
 import { GlobalStyles } from "../../styles/GlobalStyles";
 import EmojiSelector from "../Buttons/EmojiSelector";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { setAddPet } from "../../store/slices/notesSlice";
 
 const AddPetBottomSheet = () => {
-  const [visible, setVisible] = useState(true);
+  const dispatch = useAppDispatch();
+  let visible = useAppSelector((state) => state.notes.showAddPet);
 
   //Toggling the visibility state of the bottom sheet
   const toggleBottomSheet = () => {
-    setVisible(!visible);
+    dispatch(setAddPet(!visible));
   };
 
   return (

@@ -1,18 +1,21 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { BottomSheet } from "react-native-btr";
 import CloseButton from "../../components/Buttons/CloseButton";
 import { Colors } from "../../styles/Colors";
 import RoundedButton from "../../components/Buttons/RoundedButton";
 import PetItem from "../../components/NoteList/PetItem";
 import { GlobalStyles } from "../../styles/GlobalStyles";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { setAddNote } from "../../store/slices/notesSlice";
 
 const AddNoteBottomSheet = () => {
-  const [visible, setVisible] = useState(true);
-  
+  const dispatch = useAppDispatch();
+  let visible = useAppSelector((state) => state.notes.showAddNote);
+
   //Toggling the visibility state of the bottom sheet
   const toggleBottomSheet = () => {
-    setVisible(!visible);
+    dispatch(setAddNote(!visible));
   };
 
   return (
@@ -23,7 +26,7 @@ const AddNoteBottomSheet = () => {
     >
       <View style={styles.bottomSheet}>
         <View style={{ alignSelf: "flex-end", margin: 15 }}>
-          <CloseButton onPress={toggleBottomSheet}/>
+          <CloseButton onPress={toggleBottomSheet} />
         </View>
         <Text style={[GlobalStyles.text, styles.bottomTitle]}>
           Agregar Nota
@@ -45,7 +48,7 @@ const AddNoteBottomSheet = () => {
         {/* buttons */}
         <View style={styles.buttonsRow}>
           <PetItem name="Otto" color="brown" emoji="🐕" />
-          <RoundedButton title="Agregar Nota" onPress={toggleBottomSheet}/>
+          <RoundedButton title="Agregar Nota" onPress={toggleBottomSheet} />
         </View>
       </View>
     </BottomSheet>
