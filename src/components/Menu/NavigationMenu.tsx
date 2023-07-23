@@ -8,7 +8,7 @@ import { ScreensNames } from "../../types";
 import { useAppDispatch } from "../../store/store";
 import { setScreensNames } from "../../store/slices/notesSlice";
 
-const ActionsMenu = () => {
+const NavigationMenu = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const dispatch = useAppDispatch()
 
@@ -46,7 +46,7 @@ const ActionsMenu = () => {
   );
 };
 
-export default ActionsMenu;
+export default NavigationMenu;
 
 const styles = StyleSheet.create({
   container: {

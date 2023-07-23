@@ -8,6 +8,7 @@ interface NotesState {
   drugsNotes: ItemNoteType[];
   vetNotes: ItemNoteType[];
   pets: PetItemType[];
+  emojis: string[];
 }
 
 //navigation states
@@ -24,9 +25,27 @@ const initialState: NotesState & StatusState = {
   showAddPet: false,
   showDeletePet: false,
   pets: [
-    { name: "Otto", color: "", emoji: "🐕" },
-    { name: "Corcho", color: "", emoji: "🐁" },
-    { name: "Pupu", color: "", emoji: "🐹" },
+    { name: "Otto", color: "", emoji: "🐶", id: 1 },
+    { name: "Corcho", color: "", emoji: "🐱", id: 2 },
+    { name: "Pupu", color: "", emoji: "🦔", id: 3 },
+  ],
+  emojis: [
+    "🐶",
+    "🐱",
+    "🐹",
+    "🐰",
+    "🐦",
+    "🦜",
+    "🐢",
+    "🐠",
+    "🐍",
+    "🐹",
+    "🐭",
+    "🐱",
+    "🐦",
+    "🐰",
+    "🐹",
+    "🦔",
   ],
   foodNotes: [
     {
@@ -37,12 +56,12 @@ const initialState: NotesState & StatusState = {
     {
       description: "Se levantó a comer en su tachito.",
       date: formatDate(new Date()),
-      petId: 1,
+      petId: 2,
     },
     {
       description: "Tomó poca agua.",
       date: formatDate(new Date()),
-      petId: 1,
+      petId: 3,
     },
   ],
   drugsNotes: [
@@ -54,7 +73,7 @@ const initialState: NotesState & StatusState = {
     {
       description: "Comió el coso para los dientes.",
       date: formatDate(new Date()),
-      petId: 1,
+      petId: 3,
     },
   ],
   vetNotes: [
@@ -85,6 +104,8 @@ export const currencySlice = createSlice({
     setDeletePet: (state, action: PayloadAction<boolean>) => {
       state.showDeletePet = action.payload;
     },
+
+    //handle pet data
   },
 });
 

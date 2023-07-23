@@ -3,11 +3,17 @@ import React from "react";
 import { GlobalStyles } from "../../styles/GlobalStyles";
 import { PetItemType } from "../../types";
 
-const PetItem = ({ name, emoji, color }: PetItemType) => {
+interface Props {
+  petData: PetItemType;
+}
+
+const PetItem = ({ petData }: Props) => {
   return (
     <TouchableOpacity style={styles.container}>
-      <Text style={[styles.name, { color }]}>{name} </Text>
-      <Text style={GlobalStyles.text}>{emoji}</Text>
+      <Text style={[styles.name, { color: petData.color }]}>
+        {petData.name}
+      </Text>
+      <Text style={GlobalStyles.text}>{petData.emoji}</Text>
     </TouchableOpacity>
   );
 };

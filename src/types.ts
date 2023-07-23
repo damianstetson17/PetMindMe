@@ -2,6 +2,7 @@
  * Item type for pets data
  */
 export type PetItemType = {
+  id: number,
   name: string;
   color?: string;
   emoji?: string;

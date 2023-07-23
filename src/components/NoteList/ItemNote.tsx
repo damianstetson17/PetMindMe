@@ -2,16 +2,20 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { GlobalStyles } from "../../styles/GlobalStyles";
 import { Colors } from "../../styles/Colors";
-import { ItemNoteType } from "../../types";
+import { ItemNoteType, PetItemType } from "../../types";
 import PetItem from "./PetItem";
+import { useAppSelector } from "../../store/store";
 
-const ItemNote = ({ description, date, petData }: ItemNoteType) => {
+const ItemNote = ({ description, date, petId }: ItemNoteType) => {
+  let petData = useAppSelector((state) => state.notes.pets).find(
+    (pet: PetItemType) => pet.id === petId
+  );
+
   return (
     <TouchableOpacity style={styles.container}>
       <Text style={[GlobalStyles.text, styles.description]}>{description}</Text>
       <View style={styles.bottom}>
-        {/* <PetItem name={petData.name} color={petData.color} emoji={petData.emoji} /> */}
-        <PetItem name="Otto" color="brown" emoji="🐕" />
+        {petData ? <PetItem petData={petData} /> : <Text></Text>}
         <Text style={[GlobalStyles.text, styles.date]}>{date}</Text>
       </View>
     </TouchableOpacity>

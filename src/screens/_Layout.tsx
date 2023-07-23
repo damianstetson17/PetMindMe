@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
-import ActionsMenu from "../components/Menu/ActionsMenu";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import NavigationMenu from "../components/Menu/NavigationMenu";
 import { GlobalStyles } from "../styles/GlobalStyles";
 import React, { ReactNode } from "react";
 import FAB from "../components/Buttons/FAB";
@@ -20,10 +20,11 @@ const Layout = ({ title, children }: Props) => {
         <Text style={[GlobalStyles.subtitle, styles.subtitle]}>{title}</Text>
       </View>
 
-      <ActionsMenu />
-
+      {/* navigator */}
+      <NavigationMenu />
       {children}
 
+      {/* actions floating button */}
       <FAB />
 
       {/* bottom sheets */}
