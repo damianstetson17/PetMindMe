@@ -1,11 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, View } from "react-native";
+import { StackNavigator } from "./src/navigation/StackNavigator";
+import { useFonts, Andika_400Regular, Andika_400Regular_Italic } from '@expo-google-fonts/andika';
 
 export default function App() {
+  let [fontsLoaded] = useFonts({
+    Andika_400Regular,
+    Andika_400Regular_Italic
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
+      <StackNavigator />
     </View>
   );
 }
@@ -13,8 +24,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
