@@ -10,6 +10,7 @@ interface NotesState {
   pets: PetItemType[];
   emojis: string[];
   newPetSelectedEmoji: string;
+  lastPetSelectedForTask: PetItemType | undefined;
 }
 
 //navigation states
@@ -26,6 +27,7 @@ const initialState: NotesState & StatusState = {
   showAddPet: false,
   showDeletePet: false,
   newPetSelectedEmoji: "🐶",
+  lastPetSelectedForTask: undefined,
   pets: [
     { name: "Otto", color: "", emoji: "🐶", id: 1 },
     { name: "Corcho", color: "", emoji: "🐱", id: 2 },
@@ -116,6 +118,9 @@ export const currencySlice = createSlice({
     setSelectedEmoji: (state, action: PayloadAction<string>) => {
       state.newPetSelectedEmoji = action.payload;
     },
+    setPetForTask:(state, action: PayloadAction<PetItemType>) => {
+      state.lastPetSelectedForTask = action.payload;
+    },
     addPet: (state, action: PayloadAction<PetItemType>) => {
       //ading the new pet with new id
       const newPet = { ...action.payload, id: state.pets.length + 1 };
@@ -147,6 +152,7 @@ export const {
   setAddPet,
   setDeletePet,
   setSelectedEmoji,
+  setPetForTask,
   addPet,
   deletePet,
   changePetNote,

@@ -2,14 +2,12 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 import { GlobalStyles } from "../../styles/GlobalStyles";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { setNewPetData } from "../../store/slices/notesSlice";
 import { PetItemType } from "../../types";
+import { setPetForTask } from "../../store/slices/notesSlice";
 
 const PetSelector = () => {
   const dispatch = useAppDispatch();
   let pets = useAppSelector((state) => state.notes.pets);
-
-  let newPetData = useAppSelector((state) => state.notes.newPetData);
   const [index, setIndex] = useState(0);
   const [pet, setPet] = useState<PetItemType>();
 
@@ -17,7 +15,7 @@ const PetSelector = () => {
   useEffect(() => {
     setPet(pets[index]);
     if (pet) {
-      dispatch(setNewPetData({ ...newPetData, id: pet.id }));
+      dispatch(setPetForTask(pet));
     }
   }, [index, pet]);
 
@@ -36,7 +34,7 @@ const PetSelector = () => {
       style={styles.container}
     >
       <Text style={[styles.title, { marginRight: 5 }]}>{pets[index].name}</Text>
-      <Text style={GlobalStyles.text}>{pets[index].emoji}</Text>
+      <Text style={GlobalStyles.text}>{pet?.emoji}</Text>
     </TouchableOpacity>
   );
 };
