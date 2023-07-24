@@ -4,20 +4,30 @@ import { GlobalStyles } from "../../styles/GlobalStyles";
 import { Colors } from "../../styles/Colors";
 import { ItemNoteType, PetItemType } from "../../types";
 import PetItem from "./PetItem";
-import { useAppSelector } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { deleteNote } from "../../store/slices/notesSlice";
 
-const ItemNote = ({ description, date, petId }: ItemNoteType) => {
+const ItemNote = ({ id, description, date, petId }: ItemNoteType) => {
+  const dispatch = useAppDispatch()
   let petData = useAppSelector((state) => state.notes.pets).find(
     (pet: PetItemType) => pet.id === petId
   );
+  let screenName = useAppSelector((state) => state.notes.currentScreen)
+  
+  //delete note from list by current screen
+  const handleDeleteNote = () => {
+    dispatch(deleteNote({id, screenName}))
+  }
+
   const emptyPet: PetItemType = {
     id: -1,
     name: "   ?   ",
     color: "",
     emoji: "🤔",
   };
+
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity onLongPress={handleDeleteNote} style={styles.container}>
       <Text style={[GlobalStyles.text, styles.description]}>{description}</Text>
       <View style={styles.bottom}>
         {petData ? (

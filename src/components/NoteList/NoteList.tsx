@@ -19,6 +19,7 @@ const NoteList = ({ data }: Props) => {
           id={item.id}
         />
       )}
+      keyExtractor={(item) => item.id.toString()}
     />
   );
 };
