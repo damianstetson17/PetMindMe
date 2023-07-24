@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import React, { ReactNode, useState, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { Colors } from "../../styles/Colors";
 import { GlobalStyles } from "../../styles/GlobalStyles";
 import { useAppSelector } from "../../store/store";
@@ -9,22 +9,18 @@ type Props = {
   icon?: ReactNode;
   title?: string;
   onPress?(): void;
-  screenName?: ScreensNames;
+  screenName: ScreensNames;
 };
 
 const Action = ({ icon, title, onPress, screenName }: Props) => {
-  const [isScreensNames, setIsScreensNames] = useState(false);
-  let ScreensNames = useAppSelector((state) => state.notes.ScreensNames);
-
-  useEffect(() => {
-    setIsScreensNames(screenName === ScreensNames);
-  }, [ScreensNames]);
+  let currentScreen = useAppSelector((state) => state.notes.currentScreen);
+  const isCurrentScreen = screenName === currentScreen;
 
   return (
     <TouchableOpacity
       onPress={onPress}
       style={
-        isScreensNames
+        isCurrentScreen
           ? [styles.container, { borderColor: "black" }]
           : styles.container
       }

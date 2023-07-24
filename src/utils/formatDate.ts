@@ -6,7 +6,7 @@ export const formatDate = (date: Date): string => {
   const minutes = date.getMinutes().toString().padStart(2, "0");
 
   // dd-mm-aa HH:mm
-  const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}`;
+  const formattedDate = `${day}-${month}-${year}  ${hours}:${minutes}`;
 
   return formattedDate;
 };

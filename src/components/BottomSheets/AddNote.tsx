@@ -6,19 +6,38 @@ import { Colors } from "../../styles/Colors";
 import RoundedButton from "../../components/Buttons/RoundedButton";
 import { GlobalStyles } from "../../styles/GlobalStyles";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { setAddNote } from "../../store/slices/notesSlice";
+import { addNote, setAddNote } from "../../store/slices/notesSlice";
 import PetSelector from "../Buttons/PetSelector";
+import { formatDate } from "../../utils/formatDate";
+import { ItemNoteType } from "../../types";
 
 const AddNoteBottomSheet = () => {
   const dispatch = useAppDispatch();
   let visible = useAppSelector((state) => state.notes.showAddNote);
+  let screenName = useAppSelector((state) => state.notes.currentScreen);
+  let lastPetSelected = useAppSelector((state) => state.notes.lastPetSelectedForTask);
   const [elevate, setElevate] = useState(false);
+  const [description, setDescription] = useState("");
+
   //Toggling the visibility state of the bottom sheet
   const toggleBottomSheet = () => {
     dispatch(setAddNote(!visible));
     setElevate(false);
   };
   
+  const handlingNewNote = () => {
+    if(description.length > 0){
+      const newNote:ItemNoteType = {
+        id: -1,
+        description,
+        date: formatDate(new Date()),
+        petId: lastPetSelected?.id ?? 1,
+      }
+      dispatch(addNote({newNote, screenName}))
+    }
+    toggleBottomSheet();
+  }
+
   return (
     <BottomSheet
       visible={visible}
@@ -56,13 +75,14 @@ const AddNoteBottomSheet = () => {
             placeholderTextColor={"gray"}
             style={styles.inputText}
             onPressIn={() => setElevate(true)}
+            onChangeText={(text) => setDescription(text)}
           />
         </View>
 
         {/* buttons */}
         <View style={styles.buttonsRow}>
           <PetSelector />
-          <RoundedButton title="Agregar Nota" onPress={toggleBottomSheet} />
+          <RoundedButton title="Agregar Nota" onPress={handlingNewNote} />
         </View>
       </View>
     </BottomSheet>

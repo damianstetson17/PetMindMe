@@ -6,7 +6,7 @@ import Action from "./Action";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { ScreensNames } from "../../types";
 import { useAppDispatch } from "../../store/store";
-import { setScreensNames } from "../../store/slices/notesSlice";
+import { setCurrentScreen } from "../../store/slices/notesSlice";
 
 const NavigationMenu = () => {
   const navigation = useNavigation<NavigationProp<any>>();
@@ -14,7 +14,7 @@ const NavigationMenu = () => {
 
   //set the new current screen name for style update
   const handleSetScreensNames = (screenName:ScreensNames) =>{
-   dispatch(setScreensNames(screenName))
+   dispatch(setCurrentScreen(screenName))
    navigation.navigate(screenName, {})
   }
 

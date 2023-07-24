@@ -15,14 +15,20 @@ interface NotesState {
 
 //navigation states
 interface StatusState {
-  ScreensNames: ScreensNames;
+  currentScreen: ScreensNames;
   showAddNote: boolean;
   showAddPet: boolean;
   showDeletePet: boolean;
 }
 
+//payloads
+interface NewNoteType {
+  newNote: ItemNoteType;
+  screenName: ScreensNames;
+}
+
 const initialState: NotesState & StatusState = {
-  ScreensNames: ScreensNames.FOOD,
+  currentScreen: ScreensNames.FOOD,
   showAddNote: false,
   showAddPet: false,
   showDeletePet: false,
@@ -55,19 +61,19 @@ const initialState: NotesState & StatusState = {
     {
       id: 1,
       description: "Comió una croqueta que le dio morena por portarse bien.",
-      date: formatDate(new Date()),
+      date: formatDate(new Date('2023-07-17T16:24:00')),
       petId: 1,
     },
     {
       id: 2,
       description: "Se levantó a comer en su tachito.",
-      date: formatDate(new Date()),
+      date: formatDate(new Date('2023-07-18T12:15:00')),
       petId: 2,
     },
     {
       id: 3,
       description: "Tomó poca agua.",
-      date: formatDate(new Date()),
+      date: formatDate(new Date('2023-07-19T16:24:00')),
       petId: 3,
     },
   ],
@@ -75,20 +81,21 @@ const initialState: NotesState & StatusState = {
     {
       id: 1,
       description: "Tomó la pastilla para el corazón.",
-      date: formatDate(new Date()),
+      date: formatDate(new Date('2023-07-24T16:24:00')),
       petId: 1,
     },
     {
       id: 2,
       description: "Comió el coso para los dientes.",
-      date: formatDate(new Date()),
+      date: formatDate(new Date('2023-07-24T17:00:00')),
       petId: 3,
     },
   ],
   vetNotes: [
-    {id: 3,
+    {
+      id: 3,
       description: "Ya se puso la antirabica!",
-      date: formatDate(new Date()),
+      date: formatDate(new Date('2023-07-24T16:24:00')),
       petId: 1,
     },
   ],
@@ -99,11 +106,11 @@ export const currencySlice = createSlice({
   initialState,
   reducers: {
     //set current page
-    setScreensNames: (state, action: PayloadAction<ScreensNames>) => {
-      state.ScreensNames = action.payload;
+    setCurrentScreen: (state, action: PayloadAction<ScreensNames>) => {
+      state.currentScreen = action.payload;
     },
 
-    //set bottom sheets show state
+    //set bottom sheets show states
     setAddNote: (state, action: PayloadAction<boolean>) => {
       state.showAddNote = action.payload;
     },
@@ -118,16 +125,34 @@ export const currencySlice = createSlice({
     setSelectedEmoji: (state, action: PayloadAction<string>) => {
       state.newPetSelectedEmoji = action.payload;
     },
-    setPetForTask:(state, action: PayloadAction<PetItemType>) => {
+    setPetForTask: (state, action: PayloadAction<PetItemType>) => {
       state.lastPetSelectedForTask = action.payload;
     },
     addPet: (state, action: PayloadAction<PetItemType>) => {
-      //ading the new pet with new id
+      //adding the new pet with new id
       const newPet = { ...action.payload, id: state.pets.length + 1 };
       state.pets = [...state.pets, newPet];
     },
     deletePet: (state, action: PayloadAction<number>) => {
       state.pets = state.pets.filter((pet) => pet.id != action.payload);
+    },
+
+    //notes
+    addNote: (state, action: PayloadAction<NewNoteType>) => {
+      const { newNote, screenName } = action.payload;
+      
+      //add the new note by current screen list
+      switch (screenName) {
+        case ScreensNames.FOOD:
+          state.foodNotes = [...state.foodNotes, newNote];
+          break;
+        case ScreensNames.DRUGS:
+          state.drugsNotes = [...state.drugsNotes, newNote];
+          break;
+        case ScreensNames.VET:
+          state.vetNotes = [...state.vetNotes, newNote];
+          break;
+      }
     },
     changePetNote: (state, action: PayloadAction<any>) => {
       const foodItemIndex = state.foodNotes.findIndex(
@@ -147,7 +172,7 @@ export const currencySlice = createSlice({
 });
 
 export const {
-  setScreensNames,
+  setCurrentScreen,
   setAddNote,
   setAddPet,
   setDeletePet,
@@ -155,6 +180,7 @@ export const {
   setPetForTask,
   addPet,
   deletePet,
+  addNote,
   changePetNote,
 } = currencySlice.actions;
 export default currencySlice.reducer;
