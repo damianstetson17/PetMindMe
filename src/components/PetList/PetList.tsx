@@ -7,7 +7,7 @@ type Props = {
   data?: PetItemType[];
 };
 
-const PetList = ({ data }: Props) => {
+const PetsListDelete = ({ data }: Props) => {
   return (
     <FlatList
       data={data}
@@ -16,6 +16,6 @@ const PetList = ({ data }: Props) => {
   );
 };
 
-export default PetList;
+export default PetsListDelete;
 
 const styles = StyleSheet.create({});

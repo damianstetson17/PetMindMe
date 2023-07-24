@@ -9,7 +9,7 @@ interface NotesState {
   vetNotes: ItemNoteType[];
   pets: PetItemType[];
   emojis: string[];
-  newPetData: PetItemType;
+  newPetSelectedEmoji: string;
 }
 
 //navigation states
@@ -25,7 +25,7 @@ const initialState: NotesState & StatusState = {
   showAddNote: false,
   showAddPet: false,
   showDeletePet: false,
-  newPetData: { name: "", color: "", emoji: "", id: -1 },
+  newPetSelectedEmoji: "🐶",
   pets: [
     { name: "Otto", color: "", emoji: "🐶", id: 1 },
     { name: "Corcho", color: "", emoji: "🐱", id: 2 },
@@ -112,9 +112,9 @@ export const currencySlice = createSlice({
       state.showDeletePet = action.payload;
     },
 
-    //handle pet data
-    setNewPetData: (state, action: PayloadAction<PetItemType>) => {
-      state.newPetData = action.payload;
+    // handle pet data
+    setSelectedEmoji: (state, action: PayloadAction<string>) => {
+      state.newPetSelectedEmoji = action.payload;
     },
     addPet: (state, action: PayloadAction<PetItemType>) => {
       //ading the new pet with new id
@@ -146,7 +146,7 @@ export const {
   setAddNote,
   setAddPet,
   setDeletePet,
-  setNewPetData,
+  setSelectedEmoji,
   addPet,
   deletePet,
   changePetNote,

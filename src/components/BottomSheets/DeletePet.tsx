@@ -6,7 +6,7 @@ import { Colors } from "../../styles/Colors";
 import { GlobalStyles } from "../../styles/GlobalStyles";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { setDeletePet } from "../../store/slices/notesSlice";
-import PetList from "../PetList/PetList";
+import PetsListDelete from "../PetList/PetList";
 
 const DeletePetBottomSheet = () => {
   const dispatch = useAppDispatch();
@@ -34,7 +34,7 @@ const DeletePetBottomSheet = () => {
 
         {/* pet list with delete button */}
         <View style={{width: '55%'}}>
-          <PetList data={pets} />
+          <PetsListDelete data={pets} />
         </View>
       </View>
     </BottomSheet>

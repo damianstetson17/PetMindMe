@@ -8,11 +8,12 @@ import { GlobalStyles } from "../../styles/GlobalStyles";
 import EmojiSelector from "../Buttons/EmojiSelector";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { addPet, setAddPet } from "../../store/slices/notesSlice";
+import { PetItemType } from "../../types";
 
 const AddPetBottomSheet = () => {
   const dispatch = useAppDispatch();
   let visible = useAppSelector((state) => state.notes.showAddPet);
-  let newPetData = useAppSelector((state) => state.notes.newPetData);
+  let emoji = useAppSelector((state) => state.notes.newPetSelectedEmoji);
   const [name, setName] = useState("");
 
   //Toggling the visibility state of the bottom sheet
@@ -20,10 +21,11 @@ const AddPetBottomSheet = () => {
     dispatch(setAddPet(!visible));
   };
 
-  //ad new pet and dismiss
+  //add new pet and dismiss
   const handleAddNewPet = () => {
     if (name.length > 0) {
-      dispatch(addPet({...newPetData, name}));
+      const newPet: PetItemType = { name, color: "", emoji, id: -1 };
+      dispatch(addPet(newPet));
       toggleBottomSheet();
     }
   };

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Alert } from "react-native";
+import { StyleSheet, View, Alert, Platform } from "react-native";
 import React from "react";
 import { PetItemType } from "../../types";
 import PetItem from "../NoteList/PetItem";
@@ -15,22 +15,33 @@ const PetDeleteItem = ({ petData }: Props) => {
 
   //delete pet and dissmis bottom sheet
   const handleDeletePet = () => {
-    dispatch(deletePet(petData.id))
+    dispatch(deletePet(petData.id));
   };
 
-  const showConfirmationAlert = () =>
+  const showConfirmationAlert = () => {
+    //web doesn't support option alerts
+    if (Platform.OS === "web") {
+      handleDeletePet();
+      return;
+    }
+
     Alert.alert(
       "¿Está seguro que desea borrar la mascota?",
       "Tendrás que volver a crearl@ !",
       [
-          { text: "Confirmar", onPress: () => handleDeletePet(), style: "default" },
-          {
-            text: "Cancelar",
-            onPress: () => console.log("Cancel Pressed"),
-            style: "destructive",
-          },
+        {
+          text: "Confirmar",
+          onPress: () => handleDeletePet(),
+          style: "default",
+        },
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "destructive",
+        },
       ]
     );
+  };
 
   return (
     <View style={styles.buttonsRow}>
