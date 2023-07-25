@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ScreensNames, ItemNoteType, PetItemType } from "../../types";
-import { drugsNotes, emojis, foodNotes, pets, vetNotes } from "./hardcoded";
+import { emojis } from "./hardcoded";
 
 //notes data
 interface NotesState {
@@ -39,11 +39,11 @@ const initialState: NotesState & StatusState = {
   showDeletePet: false,
   newPetSelectedEmoji: "🐶",
   lastPetSelectedForTask: undefined,
-  pets: pets,
+  pets: [],
   emojis: emojis,
-  foodNotes: foodNotes,
-  drugsNotes: drugsNotes,
-  vetNotes: vetNotes,
+  foodNotes: [],
+  drugsNotes: [],
+  vetNotes: [],
 };
 
 export const currencySlice = createSlice({
@@ -53,6 +53,20 @@ export const currencySlice = createSlice({
     //set current page
     setCurrentScreen: (state, action: PayloadAction<ScreensNames>) => {
       state.currentScreen = action.payload;
+    },
+
+    //hard setters for local storage
+    setPets: (state, action: PayloadAction<PetItemType[]>) => {
+      state.pets = action.payload;
+    },
+    setFoodNotes: (state, action: PayloadAction<ItemNoteType[]>) => {
+      state.foodNotes = action.payload;
+    },
+    setDrugsNotes: (state, action: PayloadAction<ItemNoteType[]>) => {
+      state.drugsNotes = action.payload;
+    },
+    setVetNotes: (state, action: PayloadAction<ItemNoteType[]>) => {
+      state.vetNotes = action.payload;
     },
 
     //set bottom sheets show states
@@ -89,16 +103,25 @@ export const currencySlice = createSlice({
       //add the new note with id by current screen list
       switch (screenName) {
         case ScreensNames.FOOD:
-          //new id will be last element id + 1
-          newId = state.foodNotes[state.foodNotes.length - 1]?.id + 1;
+          //new id will be last element id + 1 else is the first element so id while be 1
+          newId =
+            state.foodNotes.length > 0
+              ? state.foodNotes[state.foodNotes.length - 1].id + 1
+              : 1;
           state.foodNotes = [...state.foodNotes, { ...newNote, id: newId }];
           break;
         case ScreensNames.DRUGS:
-          newId = state.drugsNotes[state.drugsNotes.length - 1]?.id + 1;
+          newId =
+            state.drugsNotes.length > 0
+              ? state.drugsNotes[state.drugsNotes.length - 1].id + 1
+              : 1;
           state.drugsNotes = [...state.drugsNotes, { ...newNote, id: newId }];
           break;
         case ScreensNames.VET:
-          newId = state.vetNotes[state.vetNotes.length - 1]?.id + 1;
+          newId =
+            state.vetNotes.length > 0
+              ? state.vetNotes[state.vetNotes.length - 1].id + 1
+              : 1;
           state.vetNotes = [...state.vetNotes, { ...newNote, id: newId }];
           break;
       }
@@ -136,6 +159,10 @@ export const currencySlice = createSlice({
 });
 
 export const {
+  setPets,
+  setFoodNotes,
+  setDrugsNotes,
+  setVetNotes,
   setCurrentScreen,
   setAddNote,
   setAddPet,

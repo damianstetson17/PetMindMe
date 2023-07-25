@@ -24,8 +24,8 @@ const AddNoteBottomSheet = () => {
     dispatch(setAddNote(!visible));
     setElevate(false);
   };
-  
-  const handlingNewNote = () => {
+
+  const handlingNewNote = async () => {
     if(description.length > 0){
       const newNote:ItemNoteType = {
         id: -1,
