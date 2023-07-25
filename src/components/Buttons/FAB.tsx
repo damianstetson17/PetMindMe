@@ -5,7 +5,7 @@ import { FloatingAction } from "react-native-floating-action";
 import { EvilIcons } from "@expo/vector-icons";
 import { Colors } from "../../styles/Colors";
 import { GlobalStyles } from "../../styles/GlobalStyles";
-import { useAppDispatch } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 import {
   setAddNote,
   setAddPet,
@@ -17,7 +17,7 @@ import {
  */
 const FAB = () => {
   const dispatch = useAppDispatch();
-
+  let pets = useAppSelector((state) => state.notes.pets);
   //menu actions
   const actions = [
     {
@@ -52,13 +52,17 @@ const FAB = () => {
     },
   ];
 
+  const handleOpenAddNoteSheet = () => {
+    if (pets.length > 0) dispatch(setAddNote(true));
+    else dispatch(setAddPet(true));
+  };
   return (
     <FloatingAction
       actions={actions}
       onPressItem={(name) => {
         switch (name) {
           case "add_note":
-            dispatch(setAddNote(true));
+            handleOpenAddNoteSheet();
             break;
           case "add_pet":
             dispatch(setAddPet(true));
