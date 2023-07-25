@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, Image } from "react-native";
 import React from "react";
 import { ItemNoteType } from "../../types";
 import ItemNote from "./ItemNote";
+import EmptyList from "./EmptyList";
 
 type Props = {
   data?: ItemNoteType[];
@@ -20,6 +21,7 @@ const NoteList = ({ data }: Props) => {
         />
       )}
       keyExtractor={(item) => item.id.toString()}
+      ListEmptyComponent={<EmptyList />}
     />
   );
 };
